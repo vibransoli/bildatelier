@@ -27,6 +27,7 @@ def main():
         "client_secret": os.environ["DROPBOX_APP_SECRET"],
     }).encode()
     request = urllib.request.Request("https://api.dropboxapi.com/oauth2/token", data=body)
+    print("Dropbox-Zugang erneuern …", flush=True)
     with urllib.request.urlopen(request, timeout=60) as response:
         token = json.load(response)["access_token"]
     print("::add-mask::" + token)
@@ -43,6 +44,7 @@ def main():
             }),
         },
     )
+    print("DMG in Dropbox hochladen …", flush=True)
     with urllib.request.urlopen(request, timeout=180) as response:
         result = json.load(response)
     if result.get("size") != file.stat().st_size:
@@ -56,4 +58,10 @@ if __name__ == "__main__":
     except urllib.error.HTTPError as error:
         # Never print response bodies or request headers containing credentials.
         print("::error::Dropbox-Anfrage fehlgeschlagen (HTTP %s)." % error.code)
+        try:
+            reason = json.loads(error.read()).get("error")
+            if reason in ("invalid_grant", "invalid_client", "invalid_request", "unsupported_grant_type"):
+                print("OAuth-Fehler: " + reason)
+        except (ValueError, TypeError):
+            pass
         sys.exit(1)
