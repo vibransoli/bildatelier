@@ -1,0 +1,45 @@
+Bild-Atelier 1.9.0 – portables Mac-Buildpaket
+
+Voraussetzungen
+• Intel-Mac oder Apple-Silicon-Mac mit macOS 13 oder neuer.
+• Apple Command Line Tools mit Swift 5.7 oder neuer und passendem macOS-SDK,
+  alternativ eine eingerichtete Xcode-Installation.
+• Kein Homebrew, Python oder zusätzliche Swift-Pakete erforderlich.
+
+Start
+1. ZIP vollständig entpacken.
+2. App-erstellen-und-starten.command doppelklicken.
+3. Das Skript erstellt die App für diesen Mac, führt Selbsttests mit temporären
+   Dateien aus und öffnet sie nur bei erfolgreicher Prüfung.
+4. Die fertige App liegt unter Build/Bild-Atelier.app.
+   Sie kann anschließend nach Programme kopiert werden.
+
+Für eine App, die auf Intel UND Apple Silicon läuft:
+Universal-App-erstellen.command doppelklicken. Zum Kompilieren beider
+Architekturen wird kein Rosetta benötigt.
+
+Falls der Doppelklick vom System blockiert wird:
+Terminal öffnen, „bash “ eingeben (mit Leerzeichen), die .command-Datei aus dem
+Finder in das Terminal ziehen und Enter drücken. Damit funktioniert der Aufruf
+auch dann, wenn ein Entpacker das Ausführungsrecht nicht erhalten hat.
+
+Falls Entwicklerwerkzeuge fehlen:
+Im Terminal „xcode-select --install“ ausführen. Installation vollständig
+abschließen und danach das Startskript erneut ausführen. Bei Xcode zuerst
+Xcode öffnen und dessen Einrichtung/Lizenzdialog abschließen.
+
+Das Paket verwendet relative Pfade, prüft die lokal vorhandenen Werkzeuge und
+wählt ein zum Compiler passendes installiertes SDK ohne festgelegte Version.
+Es baut in einem temporären Ordner und kopiert erst die signierte App zum Ziel.
+Leerzeichen und Umlaute im Paketpfad sind erlaubt. Bei einem schreibgeschützten
+Paketordner wird Desktop/Bild-Atelier-Build als Ziel verwendet.
+Eine vorherige App im Build-Ziel wird mit Zeitstempel aufbewahrt.
+Installierte Apps und persönliche App-Einstellungen werden nicht ersetzt.
+
+Protokoll: Build/Build-Protokoll.txt (bzw. im oben genannten Ausweichziel).
+Die erzeugte App ist lokal signiert, nicht durch Apple notarisiert.
+„Jeder Mac“ bedeutet hier unterstützte Intel-/Apple-Silicon-Macs ab macOS 13;
+ältere macOS-Versionen können diese SwiftUI-App nicht ausführen.
+
+Neu: Wiederholte Suchen verwenden einen RAM-Index. Nach externen Änderungen
+an Dateien oder XMP bitte mit CMD+R aktualisieren.

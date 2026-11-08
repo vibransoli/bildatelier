@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>CFBundleName</key><string>Bild-Atelier</string>
+<key>CFBundleDisplayName</key><string>Bild-Atelier</string>
+<key>CFBundleIdentifier</key><string>eu.mitgmbh.bildatelier</string>
+<key>CFBundleExecutable</key><string>BildAtelier</string>
+<key>CFBundlePackageType</key><string>APPL</string>
+<key>CFBundleShortVersionString</key><string>1.9.0</string>
+<key>CFBundleVersion</key><string>14</string>
+<key>CFBundleIconFile</key><string>AppIcon</string>
+<key>LSMinimumSystemVersion</key><string>13.0</string>
+<key>NSHighResolutionCapable</key><true/>
+<key>NSSupportsAutomaticGraphicsSwitching</key><true/>
+<key>NSPrincipalClass</key><string>NSApplication</string>
+<key>NSHumanReadableCopyright</key><string>Bild-Atelier · Erstellt für Oliver Vibrans · 2026</string>
+<key>NSDocumentsFolderUsageDescription</key><string>Bild-Atelier zeigt Bilder und Videos aus den von dir ausgewählten Ordnern an.</string>
+<key>NSDesktopFolderUsageDescription</key><string>Bild-Atelier zeigt Bilder und Videos aus ausgewählten Ordnern auf deinem Schreibtisch an.</string>
+<key>NSDownloadsFolderUsageDescription</key><string>Bild-Atelier zeigt Bilder und Videos aus ausgewählten Download-Ordnern an.</string>
+<key>NSRemovableVolumesUsageDescription</key><string>Bild-Atelier liest Bilder und Videos auf ausgewählten externen Datenträgern.</string>
+<key>NSNetworkVolumesUsageDescription</key><string>Bild-Atelier liest Bilder und Videos in ausgewählten Netzwerkordnern.</string>
+<key>CFBundleDocumentTypes</key><array><dict>
+<key>CFBundleTypeName</key><string>Bilder und Videos</string>
+<key>CFBundleTypeRole</key><string>Viewer</string>
+<key>LSHandlerRank</key><string>Alternate</string>
+<key>LSItemContentTypes</key><array><string>public.image</string><string>public.movie</string><string>public.video</string></array>
+</dict></array>
+</dict></plist>

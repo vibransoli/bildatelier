@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+.AppleDouble
+._*
+# Generated build outputs and caches
+Build/
+ModuleCache*/
+.build/
+DerivedData/
+*.app/
+*.dmg
+*.zip
+*.log
+Build-Protokoll.txt
+# Generated icon renders; reproducible with make-icon.swift
+Quellcode/Assets/AppIcon.iconset/
+# Local editor state
+.vscode/
+.idea/
