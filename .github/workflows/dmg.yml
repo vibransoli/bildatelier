@@ -1,0 +1,44 @@
+name: DMG bauen und in Dropbox speichern
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: dmg-main
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Universal-App bauen
+        run: bash Quellcode/build.sh --universal --output "$RUNNER_TEMP/Build"
+      - name: Funktionstests
+        run: |
+          cp "$RUNNER_TEMP/Build/Bild-Atelier.app/Contents/MacOS/BildAtelier" "$RUNNER_TEMP/BildAtelier-Check"
+          "$RUNNER_TEMP/BildAtelier-Check" --self-test --skip-video --demo
+      - name: DMG erstellen
+        run: |
+          mkdir -p "$RUNNER_TEMP/DMG" dist
+          ditto "$RUNNER_TEMP/Build/Bild-Atelier.app" "$RUNNER_TEMP/DMG/Bild-Atelier.app"
+          ln -s /Applications "$RUNNER_TEMP/DMG/Applications"
+          VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' Quellcode/Info.plist)
+          hdiutil create -volname "Bild-Atelier" -srcfolder "$RUNNER_TEMP/DMG" -ov -format UDZO "dist/Bild-Atelier-${VERSION}-${GITHUB_RUN_NUMBER}-universal.dmg"
+          hdiutil verify dist/*.dmg
+      - uses: actions/upload-artifact@v6
+        with:
+          name: Bild-Atelier-DMG
+          path: dist/*.dmg
+          if-no-files-found: error
+          retention-days: 30
+      - name: In Dropbox speichern
+        env:
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+        run: python3 scripts/upload_dropbox.py
