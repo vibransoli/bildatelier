@@ -34,7 +34,11 @@ enum XMPChecks {
         let cropped = ImageRenderer.render(item, maxPixel: 512), original = ImageRenderer.render(item, maxPixel: 512, original: true)
         check(cropped?.pixelSize == CGSize(width: 3313, height: 4417) && cropped?.warning == nil, "Nitro-Beschnitt mit korrekter logischer Pixelgröße")
         check(original?.pixelSize == CGSize(width: 3888, height: 5184), "Originalvergleich ohne XMP-Beschnitt")
-        check(abs((cropped?.image.size.width ?? 0) / (cropped?.image.size.height ?? 1) - 3313.0 / 4417.0) < 0.00001, "Beschnitt-Seitenverhältnis trotz Thumbnail-Rundung")
+        let renderedWidth: CGFloat = cropped?.image.size.width ?? 0
+        let renderedHeight: CGFloat = cropped?.image.size.height ?? 1
+        let expectedRatio: CGFloat = 3313.0 / 4417.0
+        let ratioDifference = abs(renderedWidth / renderedHeight - expectedRatio)
+        check(ratioDifference < 0.00001, "Beschnitt-Seitenverhältnis trotz Thumbnail-Rundung")
         let oldKey = item.cacheKey
         try (data + Data(" ".utf8)).write(to: xmpURL)
         let refreshed = try DirectoryScan.read(folder, operation: BlockOperation()).items.first { $0.id == item.id }!
